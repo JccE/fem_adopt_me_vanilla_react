@@ -1,23 +1,41 @@
-import React, { useState } from "react";
-// parcel will get this from npm for you...
-import { ANIMALS } from "@frontendmasters/pet";
+import React, { useState, useEffect } from "react";
+import pet, { ANIMALS } from "@frontendmasters/pet";
 import useDropdown from "./useDropdown";
 
 const SearchParams = () => {
-  // normal way
-  // const location = "Seattle, WA";
-
-  // using useState
-  // Seattle is the default state, the "first" state
   const [location, setLocation] = useState("Seattle, WA");
-  // const [animal, setAnimal] = useState("dog");
-  // const [animal, setAnimal] = useState("dog");
-  // const [breed, setBreed] = useState("");
+
+  // for clarification, breeds is never used in useEffect, therefor it is not listed as a dependency
   const [breeds, setBreeds] = useState([]);
   const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
-  const [breed, BreedDropdown] = useDropdown("Breed", "", breeds);
+  const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
 
-  // console.log("state of location", location);
+  // with useEffect, you have to declare your dependencies
+  // because useEffect will rerun with every change
+  useEffect(() => {
+    // clear out breeds already in there
+    setBreeds([]);
+    setBreed("");
+
+    // get info from API
+    pet.breeds(animal).then(({ breeds: apiBreeds }) => {
+      // get only the object names
+      // const breedStrings = breeds.map(({ breedObj }) => breedObj.name);
+      const breedStrings = apiBreeds.map(({ name }) => name);
+      setBreeds(breedStrings);
+      // check for error
+    }, console.error);
+    // have to add these dependencies. read this as, if any
+    // one of these change, then rerun this effect, otherwise,
+    // dont run it again
+    // if location changes, it wont rerun because its not listed
+  }, [animal, setBreed, setBreeds]);
+
+  // test
+  // useEffect(() => {
+  //   // if the call is success, then console.log, else console.error
+  //   pet.breeds("dog").then(console.log, console.error);
+  // });
 
   return (
     <div className="search-params">
@@ -25,7 +43,6 @@ const SearchParams = () => {
       <form>
         <label htmlFor="location">
           Location
-          {/*any time a change happens inside the input, it will call setLocation on whatevers inside of the input */}
           <input
             id="location"
             value={location}
@@ -35,39 +52,7 @@ const SearchParams = () => {
         </label>
         <AnimalDropdown />
         <BreedDropdown />
-        {/* <label htmlFor="animal">
-          Animal
-          <select
-            id="animal"
-            value={animal}
-            onChange={e => setAnimal(e.target.value)}
-            onBlur={e => setAnimal(e.target.value)}
-          >
-            <option>All</option>
-            {ANIMALS.map(animal => (
-              <option key={animal} value={animal}>
-                {animal}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="breed">
-          Breed
-          <select
-            id="breed"
-            value={breed}
-            onChange={e => setBreed(e.target.value)}
-            onBlur={e => setBreed(e.target.value)}
-            disabled={breeds.length === 0}
-          >
-            <option>All</option>
-            {breeds.map(breedString => (
-              <option key={breedString} value={breedString}>
-                {breedString}
-              </option>
-            ))}
-          </select>
-        </label>*/}
+
         <button>Submit</button>
       </form>
     </div>
