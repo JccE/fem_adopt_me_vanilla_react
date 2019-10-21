@@ -9,6 +9,17 @@ const SearchParams = () => {
   const [breeds, setBreeds] = useState([]);
   const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
   const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
+  // this represents a set of pets we get back from an API
+  const [pets, setPets] = useState([]);
+
+  async function requestPets() {
+    const { animals } = await pet.animals({
+      location,
+      breed,
+      type: animal
+    });
+    setPets(animals || []);
+  }
 
   // with useEffect, you have to declare your dependencies
   // because useEffect will rerun with every change
@@ -40,7 +51,12 @@ const SearchParams = () => {
   return (
     <div className="search-params">
       <h1>{location}</h1>
-      <form>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          requestPets();
+        }}
+      >
         <label htmlFor="location">
           Location
           <input
@@ -55,6 +71,7 @@ const SearchParams = () => {
 
         <button>Submit</button>
       </form>
+      <Results pets={pets} />
     </div>
   );
 };
