@@ -3,19 +3,21 @@ import pet from "@frontendmasters/pet";
 
 // class component
 class Details extends React.Component {
-  // set loading state
-  constructor(props) {
-    // super says, call constructor on/all the way up to the React.Component
-    super(props);
+  state = { loading: true };
 
-    // set inital state
-    // calling this.setState will update this.state
-    // it overrides and is additive
-    // it is shallow by nature, deeply nested states will get entirely overridden
-    this.state = {
-      loading: true
-    };
-  }
+  // set loading state
+  // constructor(props) {
+  //   // super says, call constructor on/all the way up to the React.Component
+  //   super(props);
+
+  //   // set inital state
+  //   // calling this.setState will update this.state
+  //   // it overrides and is additive
+  //   // it is shallow by nature, deeply nested states will get entirely overridden
+  //   this.state = {
+  //     loading: true
+  //   };
+  // }
 
   // lifecycle methods
   // componentDidMount is very similar to useEffect in that it runs with first started up but does not run anymore afterwards
