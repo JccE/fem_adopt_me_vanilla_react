@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import pet, { ANIMALS } from "@frontendmasters/pet";
+import Results from "./Results";
 import useDropdown from "./useDropdown";
 
 const SearchParams = () => {
@@ -50,9 +51,9 @@ const SearchParams = () => {
 
   return (
     <div className="search-params">
-      <h1>{location}</h1>
       <form
         onSubmit={e => {
+          console.log(e.target);
           e.preventDefault();
           requestPets();
         }}

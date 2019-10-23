@@ -26,8 +26,10 @@
   },
   "dependencies": {
     "@frontendmasters/pet": "^1.0.3",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2"
+    "@reach/router": "^1.2.1",
+    "babel-polyfill": "^6.26.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0"
   },
   "browserslist": [
     "last 2 Chrome versions",
