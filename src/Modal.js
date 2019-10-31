@@ -16,6 +16,7 @@ const Modal = ({ children }) => {
 
     // clean up function
     // pass empty square brackets to tell it only run once
+    // or otherwise said, there is no list of dependencies
     return () => modalRoot.removeChild(elRef.current);
   }, []);
 
