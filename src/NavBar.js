@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "@reach/router";
-import { css } from "@emotion/core";
+import { css, keyframes } from "@emotion/core";
+import colors from "/colors";
 
 const color = "pink";
 
-// returning an object
+// from the current state, to 360deg later
+const spin = keyframes`
+  to {
+    transform: rotate(360deg)
+  }
+`;
+// returning an function
 
 const NavBar = () => {
   const [padding, setPadding] = useState(15);
@@ -12,12 +19,25 @@ const NavBar = () => {
     <header
       onClick={() => setPadding(padding + 15)}
       css={css`
-        background-color: ${color};
+        background-color: ${colors.light};
         padding: ${padding}px;
       `}
     >
       <Link to="/">Adopt Me!</Link>
-      <span role="img" aria-label="logo">
+      <span
+        css={css`
+          font-size: 60px;
+          display: inline-block;
+          animation: 0.1s ${spin} linear infinite;
+
+          &:hover {
+            animation: 1s ${spin} linear infinite reverse;
+            text-decoration: underline;
+          }
+        `}
+        role="img"
+        aria-label="logo"
+      >
         🤬
       </span>
     </header>
