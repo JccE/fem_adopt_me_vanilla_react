@@ -5,6 +5,10 @@ import Modal from "./Modal";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundaries";
 import ThemeContext from "./ThemeContext";
+import _ from "lodash";
+import moment from "moment";
+
+console.log(_, moment);
 
 class Details extends React.Component {
   state = { loading: true, showModal: false };
