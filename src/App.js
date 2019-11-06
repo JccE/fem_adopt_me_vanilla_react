@@ -32,4 +32,9 @@ const App = () => {
   );
 };
 
-render(<App />, document.getElementById("root"));
+// render(<App />, document.getElementById("root"));
+
+// cant be any reference to document in code using node. you can move it into react, like from global to "useEffect()"
+
+// because we are using hydrate, now we can import this into node.js and render it there
+export default App;
